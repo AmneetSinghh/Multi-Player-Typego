@@ -122,9 +122,11 @@
     </style>
 
 </head>
+<script src="/socket.io/socket.io.js"></script>
 
 <body>
     <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
     <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
     <script src="js/game.js" defer></script>
     <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left;">
@@ -149,7 +151,7 @@
                 <h1 class="temp"><span id="camp">One Shot </span> ❤&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="Timer">0</span></h1>
                 <hr>
                 <div class="quote-display" id="quoteDisplay"></div>
-                <textarea id="quoteInput" class="quote-input" autofocus></textarea>
+                <textarea id="quoteInput" class="quote-input" autofocus onkeydown="func(event)"></textarea>
                 <hr>
                 <div class="container mt-3 ">
 

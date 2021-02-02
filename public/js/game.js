@@ -7,10 +7,8 @@ let last_correct = 0;
 let current_now = 0;
 let into_lenght = 0;
 const func = e => {
-
-
     if (e.keyCode == 8) {
-        console.log("Working!  ->", now, last_correct, current_now);
+        console.log("Working!  ->", last_correct, current_now);
         if (last_correct >= current_now - 1) {
             console.log("noBackspaceallowed\n");
             e.preventDefault();
@@ -21,7 +19,6 @@ const func = e => {
     } else {
         console.log(last_char, "-> Key");
     }
-
 }
 
 
@@ -363,7 +360,7 @@ window.onload = function() {
     // the closer it to the player,  move every thing in the backgrond in the differnet speed,
     function create() {
 
-
+        this.socket = io();
         const width = this.scale.width;
         const height = this.scale.height;
         console.log(width, height);
