@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/2.4.7/phaser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+
+
+    <style>
+        body,
+        .quote-input {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        
+        .ac {
+            font-family: cursive;
+        }
+        
+        .container {
+            background-color: #f4b6ff;
+            padding: 1rem;
+            border-radius: .5rem;
+            width: 100%;
+            max-width: 96%;
+        }
+        
+        .quote-display {
+            margin-bottom: 1rem;
+            font-size: 20px;
+            margin-left: calc(1rem + 2px);
+            margin-right: calc(1rem + 2px);
+        }
+        
+        .quote-input {
+            background-color: transparent;
+            border: 2px solid #f4b6ff;
+            outline: none;
+            width: 100%;
+            height: 8rem;
+            margin: auto;
+            resize: none;
+            font-size: 20px;
+            padding: .5rem 1rem;
+            border-radius: .5rem;
+        }
+        
+        .quote-input:focus {
+            border-color: black;
+        }
+        
+        .correct {
+            color: green;
+        }
+        
+        .timer {
+            color: green;
+        }
+        
+        .temp {
+            font-family: 'Cinzel', serif;
+        }
+        
+        .incorrect {
+            color: red;
+            text-decoration: underline;
+        }
+        
+        html {
+            min-height: 100%;
+            position: relative;
+        }
+        
+        .container-fluid {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+        
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border: 0;
+            border-radius: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+        
+        .navbar-nav li a:hover {
+            color: #1abc9c !important;
+        }
+        
+        .footer-padding {
+            padding-bottom: 60px;
+        }
+        
+        .footer {
+            position: absolute;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #1abc9c;
+        }
+        
+        .footer p {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
+    <script src="js/game.js" defer></script>
+    <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left;">
+        <p style="font-family: 'Kaushan Script', cursive; padding:0px; margin: 0%;"> Type Go ❤</p>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="background-color:lavender;">
+                <div id="mynetwork">
+
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6" style="background-color:lavenderblush;">
+
+
+
+
+
+                <h1 class="temp"><span id="camp">One Shot </span> ❤&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="Timer">0</span></h1>
+                <hr>
+                <div class="quote-display" id="quoteDisplay"></div>
+                <textarea id="quoteInput" class="quote-input" autofocus></textarea>
+                <hr>
+                <div class="container mt-3 ">
+
+                    <div class="row ">
+
+                        <div class="col-md-12 ">
+                            <hr>
+
+                            <p class="ac ">Accuracy❤:<span id="Accuracy">0</span></p>
+                            <p class="ac ">WPM❤: <span id="WPM">0</span></p>
+                            <p class="ac ">CPM❤: <span id="CPM">0</span></p>
+                            <hr>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <br>
+    <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left; ">
+        <p style="font-family: 'Kaushan Script', cursive; padding:0px; margin: 0%; "> Made by ❤Harry Singh</p>
+    </nav>
+</body>
+
+</html>
