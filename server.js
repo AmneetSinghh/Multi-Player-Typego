@@ -5,12 +5,17 @@ const io = require('socket.io')(http);
 var players = {};
 app.use(express.static(__dirname + '/public'));
 
+// First of all I will add the new pages death mode and the simple mode.
+
 
 // First of all I will add the new pages death mode and the simple mode.
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/work', function(req, res) {
+    res.sendFile(__dirname + '/public/start.html');
+});
 
 io.on('connection', function(socket) {
     console.log('a user connected');

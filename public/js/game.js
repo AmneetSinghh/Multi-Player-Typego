@@ -490,41 +490,37 @@ window.onload = function() {
 
     }
 
-    function addPlayer(self, playerInfo) {
-        // this playerinfo we get from the server.
-        // self.ship = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-        // if (playerInfo.team === 'red') {
-        //     self.ship.setTint(0x0000ff);
-        // } else {
-        //     self.ship.setTint(0xff0000);
-        // }
-    }
+    // function addPlayer(self, playerInfo) {
+    //     this playerinfo we get from the server.
+    //     self.ship = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+    //     if (playerInfo.team === 'red') {
+    //         self.ship.setTint(0x0000ff);
+    //     } else {
+    //         self.ship.setTint(0xff0000);
+    //     }
+    // }
 
-    function addOtherPlayers(self, playerInfo) {
-        // const otherPlayer = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-        // if (playerInfo.team === 'blue') {
-        //     otherPlayer.setTint(0x0000ff);
-        // } else {
-        //     otherPlayer.setTint(0xff0000);
-        // }
-        // otherPlayer.playerId = playerInfo.playerId;
-        // self.otherPlayers.add(otherPlayer);
-    }
+    // function addOtherPlayers(self, playerInfo) {
+    //     const otherPlayer = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+    //     if (playerInfo.team === 'blue') {
+    //         otherPlayer.setTint(0x0000ff);
+    //     } else {
+    //         otherPlayer.setTint(0xff0000);
+    //     }
+    //     otherPlayer.playerId = playerInfo.playerId;
+    //     self.otherPlayers.add(otherPlayer);
+    // }
 
     function randomNumber(min, max) {
         return Math.random() * (max - min) + min;
     }
 
-    function JSalert() {
-        swal("A Basic JS alert by a plug-in");
-    }
+
 
     function update() {
         //  console.log("In update");
         //    console.log("->       _>_> ",len_of_text,total_words,correct_characters,correct_words,temp_len,timer.innerText);
         //
-
-
 
         const cam = this.cameras.main;
         ///decided by the accuracy of typing speed of the player;
@@ -548,6 +544,8 @@ window.onload = function() {
         cc = randomNumber(0, 1.6);
         dd = randomNumber(0, 1.5);
         // (totallength-numer_of_red_charcters)/(totallength*100)
+
+
         if (indd >= 1) {
             bird1.x += aa;
             two.x += aa;

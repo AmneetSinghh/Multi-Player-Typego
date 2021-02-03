@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -121,16 +123,152 @@
             font-size: 12px;
             color: #fff;
         }
+        
+        .arena {
+            font-size: 100px;
+            color: #9900CC;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-align: center;
+        }
+        
+        .buttonload {
+            background-color: #9900CC;
+            /* Green background */
+            border: none;
+            border-radius: 3%;
+            /* Remove borders */
+            color: white;
+            /* White text */
+            padding: 12px 24px;
+            /* Some padding */
+            font-size: 16px;
+            align-items: center;
+            text-align: center;
+            /* Set a font-size */
+        }
+        /* Add a right margin to each icon */
+        
+        .fa {
+            margin-left: -12px;
+            margin-right: 8px;
+        }
+        
+        .lets {
+            font-size: 30px;
+            color: #9900CC;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-align: center;
+        }
+        
+        .singlerace {
+            background-color: #9900CC;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 1;
+            transition: 0.3s;
+        }
+        
+        .singlerace:hover {
+            opacity: 0.6
+        }
+        
+        .deathrace {
+            background-color: #9900CC;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 1;
+            transition: 0.3s;
+        }
+        
+        .deathrace:hover {
+            opacity: 0.6
+        }
+        
+        .multiplayer {
+            background-color: #9900CC;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 1;
+            transition: 0.3s;
+        }
+        
+        .multiplayer:hover {
+            opacity: 0.6
+        }
+        
+        #race {
+            font-size: 100px;
+            color: #303030;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-align: center;
+        }
+        
+        .fa {
+            padding: 20px;
+            font-size: 30px;
+            width: 70px;
+            text-align: center;
+            text-decoration: none;
+            margin: 5px 2px;
+            border-radius: 50%;
+        }
+        
+        .fa:hover {
+            opacity: 0.7;
+        }
+        
+        .fa-linkedin {
+            background: #007bb5;
+            color: white;
+        }
+        
+        .fa-facebook {
+            background: #3B5998;
+            color: white;
+        }
+        
+        .fa-instagram {
+            background: #125688;
+            color: white;
+        }
+        
+        .fa-facebook {
+            background: #3B5998;
+            color: white;
+        }
+        
+        .fa-github {
+            background: black;
+            color: white;
+        }
+        
+        #connect {
+            font-size: 30px;
+            color: #303030;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            /* text-align: center; */
+        }
     </style>
 
 </head>
-<script src="/socket.io/socket.io.js"></script>
 
 <body>
     <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
-    <script src="js/game.js" defer></script>
+    <script src="js/screen.js" defer></script>
     <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left;">
         <p style="font-family: 'Kaushan Script', cursive; padding:0px; margin: 0%;"> Type Go ❤</p>
     </nav>
@@ -138,39 +276,34 @@
         <div class="row">
             <div class="col-sm-6" style="background-color:lavender;">
                 <div id="mynetwork">
-
-
                 </div>
 
             </div>
 
-            <div class="col-lg-6" style="background-color:lavenderblush;">
+            <div class="col-lg-6" style="background-color:#404040;">
+                <h1 class="arena">Arena <span id="race">Race</span></h1>
 
-
-
-
-
-                <h1 class="temp"><span id="camp">One Shot </span> ❤&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="Timer">0</span></h1>
-                <hr>
-                <div class="quote-display" id="quoteDisplay"></div>
-                <textarea id="quoteInput" class="quote-input" autofocus onkeydown="func(event)"></textarea>
-                <hr>
-                <div class="container mt-3 ">
-
-                    <div class="row ">
-
-                        <div class="col-md-12 ">
-                            <hr>
-
-                            <p class="ac ">Accuracy❤:<span id="Accuracy">0</span></p>
-                            <p class="ac ">WPM❤: <span id="WPM">0</span></p>
-                            <p class="ac ">CPM❤: <span id="CPM">0</span></p>
-                            <hr>
-                        </div>
-                    </div>
-
+                <div class="w3-panel w3-card-4">
+                    <hr> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button class="singlerace">&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Single Race &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                    <hr> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button class="deathrace">&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Death Race &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                    <hr> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button class="multiplayer">&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  Play with friends &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                    <hr>
                 </div>
-                <hr>
+                <div class="w3-panel w3-card-4">
+                    <span id="connect">Connect with me  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</span>
+                    <a href="https://github.com/HarrySinghhh" class="fa fa-github"></a>
+                    <a href="https://www.linkedin.com/in/amneet-singh/" class="fa fa-linkedin"></a>
+                    <a href="https://www.facebook.com/harryamneet/" class="fa fa-facebook"></a>
+                    <a href="https://www.instagram.com/harry_singhzz/?hl=en" class="fa fa-instagram"> </a>
+                </div>
+
+
+
+
+
 
             </div>
 
