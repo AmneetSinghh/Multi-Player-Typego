@@ -349,10 +349,7 @@ window.onload = function() {
         this.load.image("three", "Assets/three.png");
         this.load.image("four", "Assets/four.png");
         this.load.image("five", "Assets/five.png");
-        //this.load.image("man_run","Assets/man_run.gif");
-
-        // this.load.spritesheet("dude", "Assets/spritesheet.png", { frameWidth: 200, frameHeight: 490 });
-
+        this.load.image("ship", "Assets/manme.png");
 
     }
 
@@ -360,13 +357,10 @@ window.onload = function() {
     // the closer it to the player,  move every thing in the backgrond in the differnet speed,
     function create() {
 
-        this.socket = io();
         const width = this.scale.width;
         const height = this.scale.height;
         console.log(width, height);
-        this.add.image(width * 0.5, height * 0.5, 'sky').setScrollFactor(0);
-
-
+        sky = this.add.image(width * 0.5, height * 0.5, 'sky').setScrollFactor(0);
         createAligned(this, 100, 'mountain', 0.25)
         bird = this.add.image(100, 60, 'bird').setScrollFactor(0);
         one = this.add.image(20, 70, 'one').setScrollFactor(0);
@@ -461,6 +455,60 @@ window.onload = function() {
             fill: "#cc30ff",
             align: "center"
         }).setScrollFactor(0);;
+
+
+
+
+        /************************************************************SOCKET CONNECTION******************* */
+
+        // manme = this.add.image(200, 60, 'man').setScrollFactor(0);
+
+        // var self = this;
+        // this.socket = io();
+        // this.otherPlayers = this.add.group();
+        // this.socket.on('currentPlayers', function(players) {
+        //     Object.keys(players).forEach(function(id) {
+        //         if (players[id].playerId === self.socket.id) {
+        //             addPlayer(self, players[id]);
+        //         } else {
+        //             addOtherPlayers(self, players[id]);
+
+        //         }
+        //     });
+        // });
+        // this.socket.on('newPlayer', function(playerInfo) {
+        //     addOtherPlayers(self, playerInfo);
+        // });
+        // this.socket.on('disconnect', function(playerId) {
+        //     self.otherPlayers.getChildren().forEach(function(otherPlayer) {
+        //         if (playerId === otherPlayer.playerId) {
+        //             otherPlayer.destroy();
+        //         }
+        //     });
+        // });
+
+
+    }
+
+    function addPlayer(self, playerInfo) {
+        // this playerinfo we get from the server.
+        // self.ship = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+        // if (playerInfo.team === 'red') {
+        //     self.ship.setTint(0x0000ff);
+        // } else {
+        //     self.ship.setTint(0xff0000);
+        // }
+    }
+
+    function addOtherPlayers(self, playerInfo) {
+        // const otherPlayer = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+        // if (playerInfo.team === 'blue') {
+        //     otherPlayer.setTint(0x0000ff);
+        // } else {
+        //     otherPlayer.setTint(0xff0000);
+        // }
+        // otherPlayer.playerId = playerInfo.playerId;
+        // self.otherPlayers.add(otherPlayer);
     }
 
     function randomNumber(min, max) {

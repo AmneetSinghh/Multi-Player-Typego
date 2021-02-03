@@ -5,6 +5,8 @@ const io = require('socket.io')(http);
 var players = {};
 app.use(express.static(__dirname + '/public'));
 
+
+// First of all I will add the new pages death mode and the simple mode.
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -30,9 +32,10 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log('user disconnected');
         // remove this player from our players object
+        Socker.emit('disconnect', socket.id);
+
         delete players[socket.id];
         // emit a message to all players to remove this player
-        // io.emit('disconnect', socket.id);
     });
 });
 http.listen(8081, function() {
