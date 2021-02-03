@@ -1,4 +1,5 @@
 var express = require('express');
+
 var app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -13,10 +14,17 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/work', function(req, res) {
-    res.sendFile(__dirname + '/public/start.html');
+app.get('/single', function(req, res) {
+    res.sendFile(__dirname + '/public/single.html');
 });
 
+app.get('/death', function(req, res) {
+    res.sendFile(__dirname + '/public/death.html');
+});
+
+app.get('/multiplayer', function(req, res) {
+    res.sendFile(__dirname + '/public/multiplayer.html');
+});
 io.on('connection', function(socket) {
     console.log('a user connected');
     // create a new player and add it to our players object
