@@ -38,6 +38,6 @@ io.on('connection', function(socket) {
         // emit a message to all players to remove this player
     });
 });
-http.listen(8081, function() {
-    console.log(`Listening on ${http.address().port}`);
+http.listen(process.env.PORT || 3000, function() {
+    console.log("SERVER STARTED PORT: 3000");
 });
