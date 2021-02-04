@@ -5,11 +5,22 @@ let last_char = " ";
 let cur_char = " ";
 let last_correct = 0;
 let current_now = 0;
+let current_click = 0;
 let into_lenght = 0;
+let your_wish = 100;
+let cccc = false;
+let space_back = 0;
+let temp_string = "";
+
 const func = e => {
     if (e.keyCode == 8) {
         console.log("Working!  ->", last_correct, current_now);
-        if (last_correct >= current_now - 1) {
+        space_back += 0.34;
+
+        if (last_correct == 0) {
+            console.log("spacr not")
+
+        } else if (last_correct >= current_now - 1) {
             console.log("noBackspaceallowed\n");
             e.preventDefault();
         } else {
@@ -20,7 +31,6 @@ const func = e => {
         console.log(last_char, "-> Key");
     }
 }
-
 
 
 window.onload = function() {
@@ -39,14 +49,20 @@ window.onload = function() {
     let moves_width = 0;
     let start_min = 1;
     let time_ = start_min * 60;
+    let time_1 = 5;
     const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random';
     const quoteDisplayElement = document.getElementById('quoteDisplay');
-    const quoteInputElement = document.getElementById('quoteInput');
+    const quoteInputElement = document.getElementById('quoteInput')
+    const fifty = document.getElementById('fifty');
+    const ready = document.getElementById('ready');
+    const restart = document.getElementById('restart');
+    const under_ready = document.getElementById('under_ready');
     const timer = document.getElementById('Timer');
+    const timer1 = document.getElementById('timer1');
     const Accuracy = document.getElementById('Accuracy');
     const WPM = document.getElementById('WPM');
-    const CPM = document.getElementById('CPM');
     const camp = document.getElementById('camp');
+
 
     function getRandomQuote() {
         return fetch(RANDOM_QUOTE_API_URL)
@@ -64,23 +80,70 @@ window.onload = function() {
         seconds = seconds < 10 ? '0' + seconds : seconds;
         timer.innerHTML = `${minutes}:${seconds}`
             --time_;
+        if (timer.innerText == "0:00") {
+            timer.innerText = "0.00";
+            under_ready.innerText = "Race is Completed";
+            window.location.reload(true);
+            alert("You loss the game!");
+        }
+
     }
 
 
+    function startTimer10seconds() {
+        setInterval(update_count1, 1000);
+    }
+
+    function update_count1() {
+        let minutes = Math.floor(time_1 / 60);
+        let seconds = time_1 % 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        timer1.innerHTML = `${minutes}:${seconds}`;
+        console.log(time_1, seconds, timer1.innerText);
+
+        if (seconds == "00") {
+            if (cccc == true) {
+                under_ready.innerText = "";
+                timer1.innerText = "";
+            } else {
+                under_ready.innerText = "Type Something to start race!";
+                timer1.innerText = "";
+            }
+
+        } else {
+
+            --time_1;
+
+            if (time_1 <= 3) {
+                under_ready.innerText = "Just Starting ";
+                under_ready.style.color = "#CCCC00";
+                timer1.style.color = "#CCCC00";
+            }
+
+            if (time_1 <= 1) {
+                under_ready.innerText = "Lets Race ";
+                under_ready.style.color = "red";
+                timer1.style.color = "red";
+            }
+
+
+        }
+    }
+
     async function renderNewQuote() {
-        quoteDisplayElement.innerHTML = ''
+
         for (let i = 0; i < 2; i++) {
             const quote = await getRandomQuote();
             quote.split('').forEach(character => {
                 const characterSpan = document.createElement('span')
                 characterSpan.innerText = character
+                temp_string += character;
                 quoteDisplayElement.appendChild(characterSpan)
             })
             const characterSpan = document.createElement('span')
             characterSpan.innerText = " "
             quoteDisplayElement.appendChild(characterSpan)
             quoteInputElement.value = null;
-
         }
 
 
@@ -94,25 +157,60 @@ window.onload = function() {
         let moves_width = 1200 / time;
         len_of_text = quote1.length;
         time = total_words;
-        console.log("->------------------------------------------------------------------------------------------------- ", time, len_of_text); // time will be 14 seconds;
-        //timer.innerText=startTimer();
-        //timer.style.color="green";
         pre = time;
         WPM.innerText = 0;
         WPM.style.color = "green";
-        CPM.innerText = 0;
-        CPM.style.color = "green";
         Accuracy.innerText = 0;
         Accuracy.style.color = "green";
-
-        //     
-
 
 
 
 
 
     }
+
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+
+    function buttons_disabled() {
+        fifty.disabled = true;
+        fifty.style.backgroundColor = "#9900CC";
+
+
+    }
+
+
+    //****************************************    choose words baby ***************************** */
+    const yourFunction = async() => {
+        timer1.style.color = "green";
+        under_ready.innerText = "Starting the race! ";
+        timer1.innerText = startTimer10seconds();
+        await delay(5000);
+        quoteInputElement.disabled = false;
+
+    };
+
+
+    restart.addEventListener('click', (event) => {
+        window.location.reload(true);
+    });
+    fifty.addEventListener('click', (event) => {
+        buttons_disabled();
+        yourFunction();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -161,15 +259,6 @@ window.onload = function() {
 
     let game = new Phaser.Game(config);
     console.log(game);
-    // the jumping and the speed of the player.
-    let player_config = {
-        player_speed: 150,
-        player_jump: -750,
-    }
-
-
-
-
 
     let correct_characters = 0;
     let correct_words = 0;
@@ -177,14 +266,16 @@ window.onload = function() {
 
 
 
+
     quoteInputElement.addEventListener('input', (event) => {
         // for the timer;
-
-
         if (indd == 0) {
             timer.innerText = startTimer();
             timer.style.color = "green";
+            timer1.innerText = "";
+            cccc = true;
             ++indd;
+
         }
 
         const arrayQuote = quoteDisplayElement.querySelectorAll('span');
@@ -203,37 +294,34 @@ window.onload = function() {
             second = "";
         if (arrayValue.length > now) {
             now = arrayValue.length;
-            lets_now = Math.floor(1200 / len_of_text);
+            lets_now = Math.floor(1320 / len_of_text);
             console.log("this is it-> ", lets_now);
             if (arrayValue[now - 1] == arrayQuote[now - 1].innerText) {
                 if (into_lenght == len_of_text - 5) {
-                    bird.x += (1200 - bird.x);
-                    you.x += (1200 - you.x);
-                    one.x += (1200 - one.x);
+                    bird.x += (1400 - bird.x);
                 } else {
                     bird.x += lets_now;
-                    you.x += lets_now;
-                    one.x += lets_now;
                 }
-                console.log(bird.x, you.x, one.x, into_lenght, len_of_text);
-            } else {
-                //    bird.x-=(1200/len_of_text);
-                //    you.x-=(1200/len_of_text);
-                //    one.x-=(1200/len_of_text);
+                console.log(bird.xinto_lenght, len_of_text);
             }
         }
 
 
-
-
-
         current_now = arrayValue.length;
 
-        console.log("---------------------", arrayValue[now - 1], arrayQuote[now - 1].innerText, 1200 / len_of_text, now, arrayValue.length);
-
         /// loop to array
+        console.log("Accuracy-> ", arrayValue[arrayValue.length - 1])
         arrayQuote.forEach((characterSpan, index) => {
                 const character = arrayValue[index]
+
+                if (index == arrayValue.length - 1 && characterSpan.innerText != character) {
+                    timer.innerText = "0.00";
+                    under_ready.innerText = "------------------------------Game Over-------------------------";
+                    window.location.reload(true);
+                    alert("You loss the game!");
+                }
+
+
                 if (characterSpan.innerText == " ") {
                     if (first == second && first != "") correct_words++;
                     first = "";
@@ -285,9 +373,6 @@ window.onload = function() {
 
             }
 
-
-
-
             if (character == characterSpan.innerText && baby1 == true) {
                 into_lenght++;
                 baby1 = false;
@@ -309,12 +394,21 @@ window.onload = function() {
         }
 
 
-        console.log("last-correct-> ", );
+        console.log("last-correct-> ", last_correct, len_of_text);
         if (arrayValue[arrayValue.length - 1] == " ") last_char = -1;
         else last_char = arrayValue[arrayValue.length - 1];
         if (first == second) ++correct_words;
 
-        if (correct) {
+
+
+
+
+        if (last_correct == len_of_text - 2) {
+            timer.innerText = "0.00";
+            under_ready.innerText = "Race is Completed";
+            window.location.reload(true);
+
+            alert("You won the game!");
             ++i;
             renderNewQuote();
         }
@@ -350,6 +444,8 @@ window.onload = function() {
         this.load.image("four", "Assets/four.png");
         this.load.image("five", "Assets/five.png");
         this.load.image("ship", "Assets/manme.png");
+        this.load.image("chidi", "Assets/chidi.png");
+        this.load.image("chidi2", "Assets/chidi2.png");
 
     }
 
@@ -362,56 +458,13 @@ window.onload = function() {
         console.log(width, height);
         sky = this.add.image(width * 0.5, height * 0.5, 'sky').setScrollFactor(0);
         createAligned(this, 100, 'mountain', 0.25)
-        bird = this.add.image(100, 60, 'bird').setScrollFactor(0);
-        one = this.add.image(20, 70, 'one').setScrollFactor(0);
+        bird = this.add.image(100, 400, 'bird').setScrollFactor(0);
 
         let x = 0;
         for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 120, 'dot').setOrigin(0, 1).setScrollFactor(0);
+            track = this.add.image(x, 465, 'dot').setOrigin(0, 1).setScrollFactor(0);
             x += track.width;
         }
-        you = this.add.image(98, 70, 'you').setScrollFactor(0);
-
-
-
-
-        bird1 = this.add.image(100, 160, 'bird2').setScrollFactor(0);
-        two = this.add.image(20, 170, 'two').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 220, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-        bird2 = this.add.image(100, 260, 'bird3').setScrollFactor(0);
-        three = this.add.image(20, 270, 'three').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 320, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-        bird3 = this.add.image(100, 360, 'bird4').setScrollFactor(0);
-        four = this.add.image(20, 370, 'four').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 420, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-
-        bird4 = this.add.image(100, 460, 'bird5').setScrollFactor(0);
-        five = this.add.image(20, 470, 'five').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 520, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
         light = this.add.image(100, 700, 'light').setScrollFactor(0.2);
 
 
@@ -424,92 +477,81 @@ window.onload = function() {
 
 
         /*****************************ADDING TEXT   ***********************************************/
-        text = this.add.text(1120, 30, "WEM", {
-            font: "30px Impact",
-            fill: "#black",
-            align: "center"
 
+
+        // text = this.add.text(1120, 30, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#black",
+        //     align: "center"
+
+        // }).setScrollFactor(0);
+
+        one = this.add.text(420, 95, "Type GO", {
+            font: "100px Luminari, fantasy",
+            fill: "#DA70D6",
+            align: "center"
         }).setScrollFactor(0);
-        /*****************************ADDING TEXT   ***********************************************/
-        text2 = this.add.text(1120, 140, "WEM", {
-            font: "30px Impact",
-            fill: "#ff4f47",
+
+        two = this.add.text(360, 200, "Typing Multi-player", {
+            font: "50px Luminari, fantasy",
+            fill: "#DA70D6",
             align: "center"
-        }).setScrollFactor(0);;
+        }).setScrollFactor(0);
 
-        /*****************************ADDING TEXT   ***********************************************/
-        text3 = this.add.text(1120, 250, "WEM", {
-            font: "30px Impact",
-            fill: "#2bff59",
+        three = this.add.text(280, 200, "The", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
             align: "center"
-        }).setScrollFactor(0);;
-        /*****************************ADDING TEXT   ***********************************************/
-        text4 = this.add.text(1120, 350, "WEM", {
-            font: "30px Impact",
-            fill: "#0000ff",
+        }).setScrollFactor(0);
+
+        four = this.add.text(764, 200, "Game", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
             align: "center"
-        }).setScrollFactor(0);;
-        /*****************************ADDING TEXT   ***********************************************/
-        text5 = this.add.text(1120, 450, "WEM", {
-            font: "30px Impact",
-            fill: "#cc30ff",
+        }).setScrollFactor(0);
+
+        five = this.add.text(400, 850, "Time", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
             align: "center"
-        }).setScrollFactor(0);;
+        }).setScrollFactor(0);
+        six = this.add.text(510, 850, "to kill the", {
+            font: "50px Luminari, fantasy",
+            fill: "#DA70D6",
+            align: "center"
+        }).setScrollFactor(0);
+
+        seven = this.add.text(710, 850, "keypad", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
+            align: "center"
+        }).setScrollFactor(0);
+        ffi = this.add.text(20, 10, "Death", {
+            font: "50px Luminari, fantasy",
+            fill: "#DA70D6",
+            align: "center"
+        }).setScrollFactor(0);
+        ffii = this.add.text(150, 10, "Race", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
+            align: "center"
+        }).setScrollFactor(0);
+        chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
+
+        // fuck = this.add.text(150, 430, "fuck", {
+        //     font: "50px Luminari, fantasy",
+        //     fill: "#000000",
+        //     align: "center"
+        // }).setScrollFactor(0);
+
+        chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
 
 
-
-
-        /************************************************************SOCKET CONNECTION******************* */
-
-        // manme = this.add.image(200, 60, 'man').setScrollFactor(0);
-
-        // var self = this;
-        // this.socket = io();
-        // this.otherPlayers = this.add.group();
-        // this.socket.on('currentPlayers', function(players) {
-        //     Object.keys(players).forEach(function(id) {
-        //         if (players[id].playerId === self.socket.id) {
-        //             addPlayer(self, players[id]);
-        //         } else {
-        //             addOtherPlayers(self, players[id]);
-
-        //         }
-        //     });
-        // });
-        // this.socket.on('newPlayer', function(playerInfo) {
-        //     addOtherPlayers(self, playerInfo);
-        // });
-        // this.socket.on('disconnect', function(playerId) {
-        //     self.otherPlayers.getChildren().forEach(function(otherPlayer) {
-        //         if (playerId === otherPlayer.playerId) {
-        //             otherPlayer.destroy();
-        //         }
-        //     });
-        // });
 
 
     }
 
-    // function addPlayer(self, playerInfo) {
-    //     this playerinfo we get from the server.
-    //     self.ship = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    //     if (playerInfo.team === 'red') {
-    //         self.ship.setTint(0x0000ff);
-    //     } else {
-    //         self.ship.setTint(0xff0000);
-    //     }
-    // }
 
-    // function addOtherPlayers(self, playerInfo) {
-    //     const otherPlayer = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    //     if (playerInfo.team === 'blue') {
-    //         otherPlayer.setTint(0x0000ff);
-    //     } else {
-    //         otherPlayer.setTint(0xff0000);
-    //     }
-    //     otherPlayer.playerId = playerInfo.playerId;
-    //     self.otherPlayers.add(otherPlayer);
-    // }
 
     function randomNumber(min, max) {
         return Math.random() * (max - min) + min;
@@ -519,58 +561,25 @@ window.onload = function() {
 
 
     function update() {
-        //  console.log("In update");
-        //    console.log("->       _>_> ",len_of_text,total_words,correct_characters,correct_words,temp_len,timer.innerText);
-        //
-
         const cam = this.cameras.main;
-        ///decided by the accuracy of typing speed of the player;
-
         if (timer.innerText >= total_words - 5) {
             timer.style.color = "red";
         }
 
 
 
-        if (speed >= 30) speed = 30;
-        if (timer.innerText >= total_words) {
-            Accuracy.innerText = (correct_characters / len_of_text) * 100;
-        }
         WPM.innerText = correct_words;
-        CPM.innerText = correct_characters;
-        Accuracy.innerText = (correct_characters / len_of_text) * 100;
-        let aa, bb, cc, dd;
-        aa = randomNumber(0, 0.9);
-        bb = randomNumber(0, 1.3);
-        cc = randomNumber(0, 1.6);
-        dd = randomNumber(0, 1.5);
-        // (totallength-numer_of_red_charcters)/(totallength*100)
 
-
+        if (speed >= 30) speed = 30;
         if (indd >= 1) {
-            bird1.x += aa;
-            two.x += aa;
-            bird2.x += bb;
-            three.x += bb;
-            bird3.x += cc;
-            four.x += cc;
-            bird4.x += dd;
-            five.x += dd;
             cam.scrollX += speed;
             speed += 0.2;
+            // console.log("Orignla speed-> ", correct_characters / len_of_text);
+            let cal = ((correct_characters / len_of_text) * 100);
+            let cal1 = cal.toFixed(2);
+            Accuracy.innerText = 100 - space_back;
 
         }
-
-
-        //console.log(bird1.x,bird2.x,bird3.x,bird4.x);
-
-        text.text = bird.x + "%";
-        text2.text = bird1.x + "%";
-        text3.text = bird2.x + "%";
-        text4.text = bird3.x + "%";
-        text5.text = bird4.x + "%";
-
-
 
     }
 

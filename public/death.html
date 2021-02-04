@@ -6,9 +6,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -18,7 +20,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-
 
     <style>
         body,
@@ -71,7 +72,7 @@
         }
         
         .temp {
-            font-family: 'Cinzel', serif;
+            font-family: 'impact';
         }
         
         .incorrect {
@@ -121,10 +122,50 @@
             font-size: 12px;
             color: #fff;
         }
+        
+        .type_of {
+            background-color: #f4b6ff;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 100%;
+        }
+        /* Green */
+        
+        .type_of {
+            border-color: #4CAF50;
+            color: white;
+        }
+        
+        .type_of:hover {
+            background-color: #9900CC;
+            color: white;
+        }
+        
+        #ready {
+            color: #4CAF50;
+            font-size: 20px;
+            text-align: center;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        #timer {
+            color: #4CAF50;
+        }
+        
+        #death {
+            color: #800000;
+        }
     </style>
 
 </head>
-<script src="/socket.io/socket.io.js"></script>
 
 <body>
     <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -149,12 +190,22 @@
 
 
 
+                <div class="w3-panel w3-card-4">
+                    <h1 class="temp"><span id="camp"></span>
+                        <button class="type_of" id="fifty">Start Game</button>
+                        <span id="Timer"></span></h1>
+                </div>
+                <hr>
+                <div class="w3-panel w3-card-4">
 
-                <h1 class="temp"><span id="camp">Death Race </span> ❤&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span id="Timer">0</span></h1>
+                    <div class="quote-display" id="quoteDisplay"></div>
+                    <textarea id="quoteInput" class="quote-input" autofocus onkeydown="func(event)" , disabled></textarea>
+                    <hr>
+                </div>
+                <p id="ready"> <span id="under_ready">If you type the Wrong characters in  <span id="death">Death-Race</span>, Your game'll be over.</span> <span id="timer1"></span> </p>
+
                 <hr>
-                <div class="quote-display" id="quoteDisplay"></div>
-                <textarea id="quoteInput" class="quote-input" autofocus onkeydown="func(event)"></textarea>
-                <hr>
+
                 <div class="container mt-3 ">
 
                     <div class="row ">
@@ -164,7 +215,11 @@
 
                             <p class="ac ">Accuracy❤:<span id="Accuracy">0</span></p>
                             <p class="ac ">WPM❤: <span id="WPM">0</span></p>
-                            <p class="ac ">CPM❤: <span id="CPM">0</span></p>
+
+                            <button class="btn btn-warning" id="restart"> Restart </button>
+                            <a href="/single"> <button class="btn btn-warning" id="restart"> Singlemode </button></a>
+                            <a href="/multiplayer"> <button class="btn btn-warning" id="restart"> Play with friends </button></a>
+                            <a href="/"><button class="btn btn-warning" id="restart"> Go back to Menu </button></a>
                             <hr>
                         </div>
                     </div>

@@ -9,12 +9,18 @@ let current_click = 0;
 let into_lenght = 0;
 let your_wish = 100;
 let cccc = false;
+let space_back = 0;
 let temp_string = "";
 
 const func = e => {
     if (e.keyCode == 8) {
         console.log("Working!  ->", last_correct, current_now);
-        if (last_correct >= current_now - 1) {
+        space_back += 0.34;
+
+        if (last_correct == 0) {
+            console.log("spacr not")
+
+        } else if (last_correct >= current_now - 1) {
             console.log("noBackspaceallowed\n");
             e.preventDefault();
         } else {
@@ -83,6 +89,13 @@ window.onload = function() {
         seconds = seconds < 10 ? '0' + seconds : seconds;
         timer.innerHTML = `${minutes}:${seconds}`
             --time_;
+        if (timer.innerText == "0:00") {
+            timer.innerText = "0.00";
+            under_ready.innerText = "Race is Completed";
+            window.location.reload(true);
+            alert("You loss the game!");
+        }
+
     }
 
 
@@ -330,19 +343,11 @@ window.onload = function() {
 
     let game = new Phaser.Game(config);
     console.log(game);
-    // the jumping and the speed of the player.
-    let player_config = {
-        player_speed: 150,
-        player_jump: -750,
-    }
-
-
-
-
 
     let correct_characters = 0;
     let correct_words = 0;
     let temp_len = 0;
+
 
 
 
@@ -354,6 +359,7 @@ window.onload = function() {
             timer1.innerText = "";
             cccc = true;
             ++indd;
+
         }
 
         const arrayQuote = quoteDisplayElement.querySelectorAll('span');
@@ -372,24 +378,17 @@ window.onload = function() {
             second = "";
         if (arrayValue.length > now) {
             now = arrayValue.length;
-            lets_now = Math.floor(1200 / len_of_text);
+            lets_now = Math.floor(1320 / len_of_text);
             console.log("this is it-> ", lets_now);
             if (arrayValue[now - 1] == arrayQuote[now - 1].innerText) {
                 if (into_lenght == len_of_text - 5) {
-                    bird.x += (1200 - bird.x);
+                    bird.x += (1400 - bird.x);
                 } else {
                     bird.x += lets_now;
                 }
                 console.log(bird.xinto_lenght, len_of_text);
-            } else {
-                //    bird.x-=(1200/len_of_text);
-                //    you.x-=(1200/len_of_text);
-                //    one.x-=(1200/len_of_text);
             }
         }
-
-
-
 
 
         current_now = arrayValue.length;
@@ -449,9 +448,6 @@ window.onload = function() {
                 if (character != characterSpan.innerText) baby = false;
 
             }
-
-
-
 
             if (character == characterSpan.innerText && baby1 == true) {
                 into_lenght++;
@@ -606,6 +602,24 @@ window.onload = function() {
             fill: "#000000",
             align: "center"
         }).setScrollFactor(0);
+        ffi = this.add.text(20, 10, "Single", {
+            font: "50px Luminari, fantasy",
+            fill: "#DA70D6",
+            align: "center"
+        }).setScrollFactor(0);
+        ffii = this.add.text(150, 10, "Race", {
+            font: "50px Luminari, fantasy",
+            fill: "#000000",
+            align: "center"
+        }).setScrollFactor(0);
+        chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
+
+        // fuck = this.add.text(150, 430, "fuck", {
+        //     font: "50px Luminari, fantasy",
+        //     fill: "#000000",
+        //     align: "center"
+        // }).setScrollFactor(0);
+
         chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
 
 
@@ -623,7 +637,6 @@ window.onload = function() {
 
 
     function update() {
-
         const cam = this.cameras.main;
         if (timer.innerText >= total_words - 5) {
             timer.style.color = "red";
@@ -631,21 +644,16 @@ window.onload = function() {
 
 
 
+        WPM.innerText = correct_words;
+
         if (speed >= 30) speed = 30;
-
-        // if (timer.innerText >= total_words) {
-        //     Accuracy.innerText = (correct_characters / len_of_text) * 100;
-        // }
-
-        // (totallength-numer_of_red_charcters)/(totallength*100)
-
-
         if (indd >= 1) {
             cam.scrollX += speed;
             speed += 0.2;
-            WPM.innerText = correct_words;
-            Accuracy.innerText = (correct_characters / len_of_text) * 100;
-
+            // console.log("Orignla speed-> ", correct_characters / len_of_text);
+            let cal = ((correct_characters / len_of_text) * 100);
+            let cal1 = cal.toFixed(2);
+            Accuracy.innerText = 100 - space_back;
 
         }
 
