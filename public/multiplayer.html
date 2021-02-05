@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script src="/socket.io/socket.io.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -124,9 +125,10 @@
     </style>
 
 </head>
-<script src="/socket.io/socket.io.js"></script>
 
 <body>
+
+
     <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
@@ -165,6 +167,7 @@
                             <p class="ac ">Accuracy❤:<span id="Accuracy">0</span></p>
                             <p class="ac ">WPM❤: <span id="WPM">0</span></p>
                             <p class="ac ">CPM❤: <span id="CPM">0</span></p>
+                            <button class="btn btn-warning" id="check_button">All clients</button>
                             <hr>
                         </div>
                     </div>

@@ -1,4 +1,23 @@
 // // for the backspacing thing. problem.
+// fir the players;
+let cm = 60;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let word_or_not = false;
 let last_char = " ";
@@ -6,6 +25,7 @@ let cur_char = " ";
 let last_correct = 0;
 let current_now = 0;
 let into_lenght = 0;
+var socket = io();
 const func = e => {
     if (e.keyCode == 8) {
         console.log("Working!  ->", last_correct, current_now);
@@ -210,6 +230,7 @@ window.onload = function() {
                     bird.x += (1200 - bird.x);
                     you.x += (1200 - you.x);
                     one.x += (1200 - one.x);
+                    // not only the player one pencho;
                 } else {
                     bird.x += lets_now;
                     you.x += lets_now;
@@ -323,7 +344,7 @@ window.onload = function() {
 
 
 
-
+    let client_positions = {};
 
     function preload() {
 
@@ -372,46 +393,6 @@ window.onload = function() {
         }
         you = this.add.image(98, 70, 'you').setScrollFactor(0);
 
-
-
-
-        bird1 = this.add.image(100, 160, 'bird2').setScrollFactor(0);
-        two = this.add.image(20, 170, 'two').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 220, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-        bird2 = this.add.image(100, 260, 'bird3').setScrollFactor(0);
-        three = this.add.image(20, 270, 'three').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 320, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-        bird3 = this.add.image(100, 360, 'bird4').setScrollFactor(0);
-        four = this.add.image(20, 370, 'four').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 420, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
-
-        bird4 = this.add.image(100, 460, 'bird5').setScrollFactor(0);
-        five = this.add.image(20, 470, 'five').setScrollFactor(0);
-
-        x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 520, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
-        }
-
         light = this.add.image(100, 700, 'light').setScrollFactor(0.2);
 
 
@@ -423,93 +404,130 @@ window.onload = function() {
 
 
 
-        /*****************************ADDING TEXT   ***********************************************/
-        text = this.add.text(1120, 30, "WEM", {
-            font: "30px Impact",
-            fill: "#black",
-            align: "center"
+        // bird1 = this.add.image(100, 160, 'bird2').setScrollFactor(0);
+        // two = this.add.image(20, 170, 'two').setScrollFactor(0);
 
-        }).setScrollFactor(0);
-        /*****************************ADDING TEXT   ***********************************************/
-        text2 = this.add.text(1120, 140, "WEM", {
-            font: "30px Impact",
-            fill: "#ff4f47",
-            align: "center"
-        }).setScrollFactor(0);;
+        // x = 0;
+        // for (let i = 0; i <= 100; ++i) {
+        //     track = this.add.image(x, 220, 'dot').setOrigin(0, 1).setScrollFactor(0);
+        //     x += track.width;
+        // }
 
-        /*****************************ADDING TEXT   ***********************************************/
-        text3 = this.add.text(1120, 250, "WEM", {
-            font: "30px Impact",
-            fill: "#2bff59",
-            align: "center"
-        }).setScrollFactor(0);;
-        /*****************************ADDING TEXT   ***********************************************/
-        text4 = this.add.text(1120, 350, "WEM", {
-            font: "30px Impact",
-            fill: "#0000ff",
-            align: "center"
-        }).setScrollFactor(0);;
-        /*****************************ADDING TEXT   ***********************************************/
-        text5 = this.add.text(1120, 450, "WEM", {
-            font: "30px Impact",
-            fill: "#cc30ff",
-            align: "center"
-        }).setScrollFactor(0);;
+        // bird2 = this.add.image(100, 260, 'bird3').setScrollFactor(0);
+        // three = this.add.image(20, 270, 'three').setScrollFactor(0);
+
+        // x = 0;
+        // for (let i = 0; i <= 100; ++i) {
+        //     track = this.add.image(x, 320, 'dot').setOrigin(0, 1).setScrollFactor(0);
+        //     x += track.width;
+        // }
+
+        // bird3 = this.add.image(100, 360, 'bird4').setScrollFactor(0);
+        // four = this.add.image(20, 370, 'four').setScrollFactor(0);
+
+        // x = 0;
+        // for (let i = 0; i <= 100; ++i) {
+        //     track = this.add.image(x, 420, 'dot').setOrigin(0, 1).setScrollFactor(0);
+        //     x += track.width;
+        // }
 
 
+        // bird4 = this.add.image(100, 460, 'bird5').setScrollFactor(0);
+        // five = this.add.image(20, 470, 'five').setScrollFactor(0);
+
+        // x = 0;
+        // for (let i = 0; i <= 100; ++i) {
+        //     track = this.add.image(x, 520, 'dot').setOrigin(0, 1).setScrollFactor(0);
+        //     x += track.width;
+        // }
 
 
-        /************************************************************SOCKET CONNECTION******************* */
 
-        // manme = this.add.image(200, 60, 'man').setScrollFactor(0);
 
-        // var self = this;
-        // this.socket = io();
-        // this.otherPlayers = this.add.group();
-        // this.socket.on('currentPlayers', function(players) {
-        //     Object.keys(players).forEach(function(id) {
-        //         if (players[id].playerId === self.socket.id) {
-        //             addPlayer(self, players[id]);
-        //         } else {
-        //             addOtherPlayers(self, players[id]);
+        // /*****************************ADDING TEXT   ***********************************************/
+        // text = this.add.text(1120, 30, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#black",
+        //     align: "center"
 
-        //         }
-        //     });
+        // }).setScrollFactor(0);
+        // /*****************************ADDING TEXT   ***********************************************/
+        // text2 = this.add.text(1120, 140, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#ff4f47",
+        //     align: "center"
+        // }).setScrollFactor(0);;
+
+        // /*****************************ADDING TEXT   ***********************************************/
+        // text3 = this.add.text(1120, 250, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#2bff59",
+        //     align: "center"
+        // }).setScrollFactor(0);;
+        // /*****************************ADDING TEXT   ***********************************************/
+        // text4 = this.add.text(1120, 350, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#0000ff",
+        //     align: "center"
+        // }).setScrollFactor(0);;
+        // /*****************************ADDING TEXT   ***********************************************/
+        // text5 = this.add.text(1120, 450, "WEM", {
+        //     font: "30px Impact",
+        //     fill: "#cc30ff",
+        //     align: "center"
+        // }).setScrollFactor(0);;
+
+
+
+
+
+
+
+        /*********************************************************************************************************************/
+
+        // socket.on('test', msg => {
+        //     alert(msg);
         // });
-        // this.socket.on('newPlayer', function(playerInfo) {
-        //     addOtherPlayers(self, playerInfo);
-        // });
-        // this.socket.on('disconnect', function(playerId) {
-        //     self.otherPlayers.getChildren().forEach(function(otherPlayer) {
-        //         if (playerId === otherPlayer.playerId) {
-        //             otherPlayer.destroy();
-        //         }
-        //     });
+        // var btn = document.getElementById('check_button');
+
+        // socket.on('server_to_client', (data) => {
+        //     alert(data);
         // });
 
+        // btn.addEventListener('click', () => {
+        //     socket.emit('client_to_client', "Hello to all the clients!");
+        // });
+
+
+        socket.emit('new_player', bird); // giving info to the server about the player;
+
+        socket.on('update_players', players => {
+            players_found = {};
+            for (let id in players) {
+                if (client_positions[id] == undefined && id != socket.id) { // not present pencho;
+                    if (Object.keys(client_positions).length == 0) { new_bird = this.add.image(bird.x, cm + 100, 'bird2').setScrollFactor(0); }
+                    if (Object.keys(client_positions).length == 1) { new_bird = this.add.image(bird.x, cm + 100, 'bird3').setScrollFactor(0); }
+                    if (Object.keys(client_positions).length == 2) { new_bird = this.add.image(bird.x, cm + 100, 'bird4').setScrollFactor(0); }
+                    if (Object.keys(client_positions).length == 3) { new_bird = this.add.image(bird.x, cm + 100, 'bird5').setScrollFactor(0); }
+
+                    client_positions[id] = new_bird;
+                    cm += 100;
+                }
+                players_found[id] = true;
+            }
+            // console.log(Object.keys(client_positions).length);
+            for (let id in client_positions) {
+                if (!players_found[id]) {
+                    client_positions[id].destroy();
+                    console.log(client_positions);
+                    delete client_positions[id]; // delete from the client position dictionary
+                }
+            }
+        });
 
     }
 
-    // function addPlayer(self, playerInfo) {
-    //     this playerinfo we get from the server.
-    //     self.ship = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    //     if (playerInfo.team === 'red') {
-    //         self.ship.setTint(0x0000ff);
-    //     } else {
-    //         self.ship.setTint(0xff0000);
-    //     }
-    // }
 
-    // function addOtherPlayers(self, playerInfo) {
-    //     const otherPlayer = self.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
-    //     if (playerInfo.team === 'blue') {
-    //         otherPlayer.setTint(0x0000ff);
-    //     } else {
-    //         otherPlayer.setTint(0xff0000);
-    //     }
-    //     otherPlayer.playerId = playerInfo.playerId;
-    //     self.otherPlayers.add(otherPlayer);
-    // }
 
     function randomNumber(min, max) {
         return Math.random() * (max - min) + min;
@@ -517,7 +535,10 @@ window.onload = function() {
 
 
 
+
     function update() {
+
+
         //  console.log("In update");
         //    console.log("->       _>_> ",len_of_text,total_words,correct_characters,correct_words,temp_len,timer.innerText);
         //
@@ -547,27 +568,29 @@ window.onload = function() {
 
 
         if (indd >= 1) {
-            bird1.x += aa;
-            two.x += aa;
-            bird2.x += bb;
-            three.x += bb;
-            bird3.x += cc;
-            four.x += cc;
-            bird4.x += dd;
-            five.x += dd;
+            // bird1.x += aa;
+            // two.x += aa;
+            // bird2.x += bb;
+            // three.x += bb;
+            // bird3.x += cc;
+            // four.x += cc;
+            // bird4.x += dd;
+            // five.x += dd;
             cam.scrollX += speed;
             speed += 0.2;
+            //give my player's position 
+            // socket.emit('update', bird.x);
 
         }
 
 
         //console.log(bird1.x,bird2.x,bird3.x,bird4.x);
 
-        text.text = bird.x + "%";
-        text2.text = bird1.x + "%";
-        text3.text = bird2.x + "%";
-        text4.text = bird3.x + "%";
-        text5.text = bird4.x + "%";
+        // text.text = bird.x + "%";
+        // text2.text = bird1.x + "%";
+        // text3.text = bird2.x + "%";
+        // text4.text = bird3.x + "%";
+        // text5.text = bird4.x + "%";
 
 
 

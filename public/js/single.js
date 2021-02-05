@@ -210,7 +210,7 @@ window.onload = function() {
 
     //****************************************    choose words baby ***************************** */
     const yourFunction = async() => {
-        console.log("Waited 10s", temp_string);
+        // console.log("Waited 10s", temp_string);
         timer1.style.color = "green";
         under_ready.innerText = "Starting the race! ";
         timer1.innerText = startTimer10seconds();
@@ -221,8 +221,8 @@ window.onload = function() {
         let ss = temp_string.split(" ");
         quoteDisplayElement.innerHTML = ''
         for (let i = 0; i < current_click; i++) {
-            console.log(i, ss[i]);
             let current = ss[i];
+            console.log(current, i, current.length)
             for (let j = 0; j < current.length; j++) {
                 const characterSpan = document.createElement('span')
                 characterSpan.innerText = current[j];

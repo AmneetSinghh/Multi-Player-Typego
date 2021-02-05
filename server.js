@@ -1,9 +1,7 @@
 var express = require('express');
-
 var app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-var players = {};
 app.use(express.static(__dirname + '/public'));
 
 // First of all I will add the new pages death mode and the simple mode.
@@ -25,32 +23,44 @@ app.get('/death', function(req, res) {
 app.get('/multiplayer', function(req, res) {
     res.sendFile(__dirname + '/public/multiplayer.html');
 });
+
+
+let players = {}; // empty players;
+
 io.on('connection', function(socket) {
-    console.log('a user connected');
-    // create a new player and add it to our players object
-    players[socket.id] = { /// socket id is the random thiung bro
-        rotation: 0,
-        x: Math.floor(Math.random() * 700) + 50,
-        y: Math.floor(Math.random() * 500) + 50,
-        playerId: socket.id,
-        team: (Math.floor(Math.random() * 2) == 0) ? 'red' : 'blue'
-    };
-    // send the players object to the new player
-    console.log(players[socket.id]);
-    socket.emit('currentPlayers', players);
-    // update all other players of the new player
-    socket.broadcast.emit('newPlayer', players[socket.id]);
+    // socket.emit('test', "This is from the server");
+    // socket.on('test1', msg => {
+    //     socket.broadcast.emit('Server to all clients!');
+    // });
 
-    // when a player disconnects, remove them from our players object
-    socket.on('disconnect', function() {
-        console.log('user disconnected');
-        // remove this player from our players object
-        Socker.emit('disconnect', socket.id);
+    // socket.on('client_to_client', data => {
+    //     socket.broadcast.emit('server_to_client', data);
 
-        delete players[socket.id];
-        // emit a message to all players to remove this player
+    // });
+    // socket.on('update', data => {
+    //     console.log("Position is-> ", data);
+
+    // });
+    socket.on('new_player', data => { // data is the player starting position
+        console.log("New client Connected with connected id!", socket.id);
+        players[socket.id] = data;
+        console.log("Starting position: ", players[socket.id].x, players[socket.id].y);
+        console.log("Current number of players: ", Object.keys(players).length);
+        console.log("PLayers Dictionary-> ", players);
+        io.emit('update_players', players); // dictionary of players
     });
+
+    socket.on('disconnect', function() {
+        delete players[socket.id];
+        console.log("Goodbye client with id-> ", socket.id);
+        console.log("Current number of playres: ", Object.keys(players).length);
+        io.emit('update_players', players);
+
+    });
+
+
 });
+
 http.listen(process.env.PORT || 3000, function() {
     console.log("SERVER STARTED PORT: 3000");
 });
