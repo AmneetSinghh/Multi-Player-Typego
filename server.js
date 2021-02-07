@@ -12,6 +12,7 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+
 app.get('/single', function(req, res) {
     res.sendFile(__dirname + '/public/single.html');
 });
@@ -60,6 +61,12 @@ io.on('connection', function(socket) {
 
 
 });
+
+
+
+
+
+// now from next First of all we have to learn the node.js in detial or in deep then after only we will be able to do this functionality.
 
 http.listen(process.env.PORT || 3000, function() {
     console.log("SERVER STARTED PORT: 3000");
